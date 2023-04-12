@@ -24,7 +24,7 @@ then # Password
   echo "> Exporting Password"
   export SSHPASS=$PASS
 
-  [[ -z $INPUT_RUNBEFORE ]] && {
+  [[ ! -z $INPUT_RUNBEFORE ]] && {
     echo "> Executing commands before deployment"
     echo "  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST \"$RUNBEFORE\""
     sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST "$RUNBEFORE"
@@ -35,7 +35,7 @@ then # Password
   echo "  sshpass -p $INPUT_PASS rsync $INPUT_ARGS -e  \"ssh -p $INPUT_PORT\" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE"
   sshpass -p $INPUT_PASS rsync $INPUT_ARGS -e  "ssh -p $INPUT_PORT" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE
 
-  [[ -z $INPUT_RUNAFTER ]] && {
+  [[ ! -z $INPUT_RUNAFTER ]] && {
     echo "> Executing commands after deployment"
     echo "  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST \"$RUNAFTER\""
     sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST "$RUNAFTER"
@@ -57,7 +57,7 @@ else # Private key
 
   ls -lha "/root/.ssh/"
 
-  [[ -z $INPUT_RUNBEFORE ]] && {
+  [[ ! -z $INPUT_RUNBEFORE ]] && {
     echo "> Executing commands before deployment"
     echo "  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST \"$RUNBEFORE\""
     sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST "$RUNBEFORE"
@@ -68,7 +68,7 @@ else # Private key
   sshpass -e rsync $INPUT_ARGS -e "ssh -p $INPUT_PORT" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE
 
 
-  [[ -z $INPUT_RUNAFTER ]] && {
+  [[ ! -z $INPUT_RUNAFTER ]] && {
     echo "> Executing commands after deployment"
     echo "  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST \"$RUNAFTER\""
     sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST "$RUNAFTER"

@@ -33,6 +33,9 @@ inputs:
   runAfterDeployment:
     description: "Commands that shall be executed after deployment"
     required: false
+  rsyncArgs:
+    description: "Rsync arguments"
+    default: '-avhz --progress --stats --delete-during'
 
 description: 'SSHPASS Github Action'
 branding:
@@ -52,3 +55,4 @@ runs:
     REMOTE: ${{ inputs.remote }}
     RUNBEFORE: ${{ inputs.runBeforeDeployment }}
     RUNAFTER: ${{ inputs.runAfterDeployment }}
+    RSYNCARGS: ${{ inputs.rsyncArgs }}

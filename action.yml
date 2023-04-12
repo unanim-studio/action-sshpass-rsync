@@ -33,7 +33,7 @@ inputs:
   runAfterDeployment:
     description: "Commands that shall be executed after deployment"
     required: false
-  rsyncArgs:
+  args:
     description: "Rsync arguments"
     default: '-avhz --progress --stats --delete-during'
 
@@ -55,4 +55,4 @@ runs:
     REMOTE: ${{ inputs.remote }}
     RUNBEFORE: ${{ inputs.runBeforeDeployment }}
     RUNAFTER: ${{ inputs.runAfterDeployment }}
-    RSYNCARGS: ${{ inputs.rsyncArgs }}
+    ARGS: ${{ inputs.args }}

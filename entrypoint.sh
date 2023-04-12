@@ -14,7 +14,7 @@ echo "> Starting ${GITHUB_WORKFLOW}:${GITHUB_ACTION}"
 # echo "INPUT_REMOTE: ${INPUT_REMOTE}"
 # echo "INPUT_RUN_BEFORE: ${INPUT_RUNBEFORE}"
 # echo "INPUT_RUN_AFTER: ${INPUT_RUNAFTER}"
-# echo "INPUT_RSYNC_ARGS: ${INPUT_RSYNCARGS}"
+# echo "INPUT_ARGS: ${INPUT_ARGS}"
 
 RUNBEFORE="${INPUT_RUNBEFORE/$'\n'/' && '}"
 RUNAFTER="${INPUT_RUNAFTER/$'\n'/' && '}"
@@ -31,7 +31,7 @@ then # Password
 
 
   echo "> Deploying now"
-  sshpass -p $INPUT_PASS rsync $INPUT_RSYNC_ARGS -e  "ssh -p $INPUT_PORT" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE
+  sshpass -p $INPUT_PASS rsync $INPUT_ARGS -e  "ssh -p $INPUT_PORT" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE
 
   [[ -z "${INPUT_RUNAFTER}" ]] && {
     echo "> Executing commands after deployment"
@@ -60,7 +60,7 @@ else # Private key
   }
 
   echo "> Deploying now"
-  sshpass -e rsync $INPUT_RSYNC_ARGS -e "ssh -p $INPUT_PORT" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE
+  sshpass -e rsync $INPUT_ARGS -e "ssh -p $INPUT_PORT" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE
 
 
   [[ -z "${INPUT_RUNAFTER}" ]] && {

@@ -24,6 +24,10 @@ then # Password
   echo "> Exporting Password"
   export SSHPASS=$PASS
 
+  echo "> Executing commands before deployment"
+  echo "  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST \"$RUNBEFORE\""
+  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST "$RUNBEFORE"
+
   echo "> Deploying now"
   echo "  sshpass -p $INPUT_PASS rsync $INPUT_ARGS -e  \"ssh -p $INPUT_PORT\" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE"
   sshpass -p $INPUT_PASS rsync $INPUT_ARGS -e  "ssh -p $INPUT_PORT" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE
@@ -47,6 +51,10 @@ else # Private key
   cat "/root/.ssh/config"
 
   ls -lha "/root/.ssh/"
+
+  echo "> Executing commands before deployment"
+  echo "  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST \"$RUNBEFORE\""
+  sshpass -e ssh -o StrictHostKeyChecking=no -p $INPUT_PORT $INPUT_USER@$INPUT_HOST "$RUNBEFORE"
 
   echo "> Deploying now"
   echo "  sshpass -e rsync $INPUT_ARGS -e \"ssh -p $INPUT_PORT\" $GITHUB_WORKSPACE/$INPUT_LOCAL $INPUT_USER@$INPUT_HOST:$INPUT_REMOTE"
